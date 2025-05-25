@@ -1,0 +1,100 @@
+<div *ngIf="lista" class="detalle-lista-container">
+    <div class="top-section">
+        <mat-card class="lista-detalle-card">
+            <mat-card-header>
+                <mat-card-title>{{ lista.nombre }}</mat-card-title>
+                <mat-card-subtitle>ID: {{ lista.id }}</mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>
+                <p>{{ lista.descripcion || 'Sin descripción' }}</p>
+            </mat-card-content>
+        </mat-card>
+
+        <mat-card class="anadir-cancion-card">
+            <mat-card-title>Añadir Canción a la Lista</mat-card-title>
+            <mat-card-content class="add-song-form-content">
+                <mat-form-field appearance="outline" class="full-width-field">
+                    <mat-label>Seleccionar Canción</mat-label>
+                    <mat-select [(ngModel)]="cancionSeleccionadaId">
+                        <mat-option *ngFor="let cancion of cancionesParaDropdown" [value]="cancion.id">
+                            {{ cancion.titulo }} - {{ cancion.artista }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </mat-card-content>
+            <mat-card-actions class="form-actions">
+                <button mat-raised-button color="primary" (click)="anadirCancionALista()" [disabled]="!cancionSeleccionadaId">
+                    <mat-icon>add</mat-icon> Añadir Canción
+                </button>
+            </mat-card-actions>
+        </mat-card>
+    </div>
+
+    <mat-card class="canciones-en-lista-card">
+        <mat-card-title>Canciones en esta Lista</mat-card-title>
+        <mat-card-content>
+            <div class="mat-elevation-z2">
+                <table mat-table [dataSource]="lista.canciones" *ngIf="lista.canciones.length > 0; else noSongsInList">
+
+                    <!-- ID Column -->
+                    <ng-container matColumnDef="id">
+                        <th mat-header-cell *matHeaderCellDef> ID </th>
+                        <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+                    </ng-container>
+
+                    <!-- Titulo Column -->
+                    <ng-container matColumnDef="titulo">
+                        <th mat-header-cell *matHeaderCellDef> Título </th>
+                        <td mat-cell *matCellDef="let element"> {{element.titulo}} </td>
+                    </ng-container>
+
+                    <!-- Artista Column -->
+                    <ng-container matColumnDef="artista">
+                        <th mat-header-cell *matHeaderCellDef> Artista </th>
+                        <td mat-cell *matCellDef="let element"> {{element.artista}} </td>
+                    </ng-container>
+
+                    <!-- Album Column -->
+                    <ng-container matColumnDef="album">
+                        <th mat-header-cell *matHeaderCellDef> Álbum </th>
+                        <td mat-cell *matCellDef="let element"> {{element.album}} </td>
+                    </ng-container>
+
+                    <!-- Año Column -->
+                    <ng-container matColumnDef="anno">
+                        <th mat-header-cell *matHeaderCellDef> Año </th>
+                        <td mat-cell *matCellDef="let element"> {{element.anno}} </td>
+                    </ng-container>
+
+                    <!-- Genero Column -->
+                    <ng-container matColumnDef="genero">
+                        <th mat-header-cell *matHeaderCellDef> Género </th>
+                        <td mat-cell *matCellDef="let element"> {{element.genero}} </td>
+                    </ng-container>
+
+                    <!-- Acciones Column -->
+                    <ng-container matColumnDef="acciones">
+                        <th mat-header-cell *matHeaderCellDef> Acciones </th>
+                        <td mat-cell *matCellDef="let element">
+                            <button mat-icon-button color="warn" (click)="quitarCancionDeLista(element.id!)">
+                                <mat-icon>remove_circle_outline</mat-icon>
+                            </button>
+                        </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                </table>
+                <ng-template #noSongsInList>
+                    <p class="no-songs-message">No hay canciones en esta lista.</p>
+                </ng-template>
+            </div>
+        </mat-card-content>
+    </mat-card>
+
+    <div class="bottom-actions">
+        <button mat-raised-button color="accent" (click)="volverAListas()">
+            <mat-icon>arrow_back</mat-icon> Volver a Listas
+        </button>
+    </div>
+</div>

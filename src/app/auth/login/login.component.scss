@@ -1,0 +1,45 @@
+.login-container {
+    display: flex;
+    justify-content: center; /* Centrar horizontalmente */
+    align-items: center;     /* Centrar verticalmente */
+    min-height: calc(100vh - 64px); /* Ocupar la altura restante de la vista, asumiendo un toolbar de 64px */
+    background-color: #f0f2f5; /* Un color de fondo suave */
+    padding: 20px;
+    box-sizing: border-box; /* Incluir padding en el tamaño total */
+}
+
+.login-card {
+    max-width: 400px; /* Ancho máximo de la tarjeta */
+    width: 100%; /* Asegurar que ocupe el ancho disponible */
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+    border-radius: 8px; /* Bordes redondeados */
+    /* Eliminar background-color para que use el del tema de Material */
+}
+
+mat-card-title {
+    text-align: center;
+    margin-bottom: 20px;
+    /* Eliminar color para que use el del tema de Material */
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px; /* Espacio entre los elementos del formulario */
+}
+
+mat-form-field {
+    width: 100%; /* Campos de entrada al 100% de ancho */
+}
+
+button[type="submit"] {
+    width: 100%; /* Botón al 100% de ancho */
+    margin-top: 10px; /* Espacio superior para el botón */
+}
+
+p {
+    color: red;
+    text-align: center;
+    margin-top: 15px;
+}
