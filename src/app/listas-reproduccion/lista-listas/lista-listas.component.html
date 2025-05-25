@@ -1,0 +1,25 @@
+<div>
+    <h2>Listas de Reproducción</h2>
+
+    <button mat-raised-button color="primary" routerLink="/listas/nueva">
+        <mat-icon>add</mat-icon> Crear Nueva Lista
+    </button>
+
+    <div class="listas-container">
+        <mat-card *ngFor="let lista of listas" class="lista-card">
+            <mat-card-title>{{ lista.nombre }}</mat-card-title>
+            <mat-card-content>
+                <p>{{ lista.descripcion || 'Sin descripción' }}</p>
+                <p>Canciones: {{ lista.canciones.length }}</p>
+            </mat-card-content>
+            <mat-card-actions>
+                <button mat-button color="accent" [routerLink]="['/listas/detalle', lista.id]">
+                    <mat-icon>visibility</mat-icon> Ver/Gestionar
+                </button>
+                <button mat-button color="warn" (click)="eliminarLista(lista.id!)">
+                    <mat-icon>delete</mat-icon>
+                </button>
+            </mat-card-actions>
+        </mat-card>
+    </div>
+</div>

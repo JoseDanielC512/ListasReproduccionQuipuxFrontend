@@ -1,0 +1,11 @@
+<mat-toolbar color="primary">
+    <span>Listas de Reproducción Quipux</span>
+    <span class="spacer"></span>
+    <button mat-button routerLink="/listas" *ngIf="authService.isLoggedIn()">Listas</button>
+    <button mat-button routerLink="/canciones" *ngIf="authService.isLoggedIn()">Canciones</button>
+    <button mat-button (click)="logout()" *ngIf="authService.isLoggedIn()">Logout</button>
+</mat-toolbar>
+
+<div class="container">
+    <router-outlet></router-outlet>
+</div>

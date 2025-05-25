@@ -1,0 +1,51 @@
+<mat-card>
+    <mat-card-title>{{ title }}</mat-card-title>
+    <mat-card-content>
+        <form [formGroup]="cancionForm" (ngSubmit)="onSubmit()">
+            <mat-form-field appearance="fill">
+                <mat-label>Título</mat-label>
+                <input matInput formControlName="titulo" required>
+                <mat-error *ngIf="cancionForm.get('titulo')?.hasError('required')">
+                    El título es requerido.
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="fill">
+                <mat-label>Artista</mat-label>
+                <input matInput formControlName="artista" required>
+                <mat-error *ngIf="cancionForm.get('artista')?.hasError('required')">
+                    El artista es requerido.
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="fill">
+                <mat-label>Álbum</mat-label>
+                <input matInput formControlName="album" required>
+                <mat-error *ngIf="cancionForm.get('album')?.hasError('required')">
+                    El álbum es requerido.
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="fill">
+                <mat-label>Año</mat-label>
+                <input matInput formControlName="anno" required>
+                <mat-error *ngIf="cancionForm.get('anno')?.hasError('required')">
+                    El año es requerido.
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="fill">
+                <mat-label>Género</mat-label>
+                <input matInput formControlName="genero" required>
+                <mat-error *ngIf="cancionForm.get('genero')?.hasError('required')">
+                    El género es requerido.
+                </mat-error>
+            </mat-form-field>
+
+            <button mat-raised-button color="primary" type="submit" [disabled]="!cancionForm.valid">
+                Guardar Canción
+            </button>
+            <button mat-button routerLink="/canciones">Cancelar</button>
+        </form>
+    </mat-card-content>
+</mat-card>
