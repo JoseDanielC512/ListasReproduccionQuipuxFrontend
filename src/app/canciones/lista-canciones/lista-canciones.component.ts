@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common'; // Importar CommonModule
 import { MatTableModule } from '@angular/material/table'; // Importar MatTableModule
 import { MatButtonModule } from '@angular/material/button'; // Importar MatButtonModule
 import { MatIconModule } from '@angular/material/icon'; // Importar MatIconModule
+import { MatCardModule } from '@angular/material/card'; // Importar MatCardModule
 import { RouterLink } from '@angular/router'; // Importar RouterLink
 
 @Component({
@@ -12,7 +13,7 @@ import { RouterLink } from '@angular/router'; // Importar RouterLink
     templateUrl: './lista-canciones.component.html',
     styleUrls: ['./lista-canciones.component.scss'], // Usar scss
     standalone: true, // Marcar como standalone
-    imports: [CommonModule, MatTableModule, MatButtonModule, MatIconModule, RouterLink] // Importar módulos necesarios
+    imports: [CommonModule, MatTableModule, MatButtonModule, MatIconModule, MatCardModule, RouterLink] // Importar módulos necesarios
 })
 export class ListaCancionesComponent implements OnInit {
     canciones: Cancion[] = [];

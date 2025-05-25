@@ -2,3 +2,5 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body.mat-app-background { /* Aplica el color de fondo del tema de Material */ }
+body.mat-typography { /* Aplica la tipografía del tema de Material */ }

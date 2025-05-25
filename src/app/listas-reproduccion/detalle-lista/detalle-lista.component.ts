@@ -29,7 +29,8 @@ import { FormsModule } from '@angular/forms'; // Importar FormsModule para el se
 })
 export class DetalleListaComponent implements OnInit {
     lista: ListaReproduccion | null = null;
-    cancionesDisponibles: Cancion[] = [];
+    todasLasCanciones: Cancion[] = []; // Almacenará todas las canciones
+    cancionesParaDropdown: Cancion[] = []; // Canciones filtradas para el dropdown
     cancionSeleccionadaId: number | null = null;
     displayedColumns: string[] = ['id', 'titulo', 'artista', 'album', 'anno', 'genero', 'acciones']; // Columnas para la tabla de canciones de la lista
 
@@ -43,41 +44,48 @@ export class DetalleListaComponent implements OnInit {
     ngOnInit(): void {
         const listaId = this.route.snapshot.params['id'];
         if (listaId) {
+            this.cargarTodasLasCanciones(); // Cargar todas las canciones primero
             this.cargarLista(listaId);
-            this.cargarCancionesDisponibles();
         } else {
-            // Manejar caso donde no hay ID de lista (ej. redirigir o mostrar error)
             console.error('No se proporcionó ID de lista.');
-            this.router.navigate(['/listas']); // Redirigir a la lista de listas
+            this.router.navigate(['/listas']);
         }
     }
 
     cargarLista(id: number): void {
         this.listaReproduccionService.getListaById(id).subscribe({
-            next: (lista) => this.lista = lista,
+            next: (lista) => {
+                this.lista = lista;
+                this.actualizarCancionesParaDropdown(); // Actualizar dropdown después de cargar la lista
+            },
             error: (err) => console.error('Error al cargar lista de reproducción:', err)
         });
     }
 
-    cargarCancionesDisponibles(): void {
+    cargarTodasLasCanciones(): void {
         this.cancionService.getAllCanciones().subscribe({
-            next: (canciones) => this.cancionesDisponibles = canciones,
+            next: (canciones) => {
+                this.todasLasCanciones = canciones;
+                this.actualizarCancionesParaDropdown(); // Actualizar dropdown después de cargar todas las canciones
+            },
             error: (err) => console.error('Error al cargar canciones disponibles:', err)
         });
     }
 
+    actualizarCancionesParaDropdown(): void {
+        if (this.todasLasCanciones.length > 0 && this.lista) {
+            const idsEnLista = new Set(this.lista.canciones.map(c => c.id));
+            this.cancionesParaDropdown = this.todasLasCanciones.filter(c => !idsEnLista.has(c.id));
+        } else {
+            this.cancionesParaDropdown = [];
+        }
+    }
+
     anadirCancionALista(): void {
         if (this.lista && this.cancionSeleccionadaId !== null) {
-            // Enviar la lista actualizada al backend con la nueva canción
-            // El backend necesita un DTO con el ID de la lista y la lista de IDs de canciones actualizada.
-            // Esto requiere un método específico en ListaReproduccionService o adaptar updateLista.
-            // Por ahora, simularé la adición en el frontend y mostraré un mensaje.
-            // La implementación real requeriría una llamada PUT/POST al backend.
-
-            const cancionAAgregar = this.cancionesDisponibles.find(c => c.id === this.cancionSeleccionadaId);
+            const cancionAAgregar = this.todasLasCanciones.find(c => c.id === this.cancionSeleccionadaId);
 
             if (cancionAAgregar && !this.lista.canciones.some(c => c.id === cancionAAgregar.id)) {
-                 // Crear un DTO de actualización con todos los IDs de canciones actuales + el nuevo
                  const cancionIdsActualizados = new Set(this.lista.canciones.map(c => c.id));
                  cancionIdsActualizados.add(this.cancionSeleccionadaId);
 
@@ -85,36 +93,32 @@ export class DetalleListaComponent implements OnInit {
                      id: this.lista.id,
                      nombre: this.lista.nombre,
                      descripcion: this.lista.descripcion,
-                     cancionIds: Array.from(cancionIdsActualizados) // Convertir Set a Array para el DTO
+                     cancionIds: Array.from(cancionIdsActualizados)
                  };
 
-                 this.listaReproduccionService.updateLista(this.lista.id!, listaActualizadaDto as any).subscribe({ // Usar as any temporalmente si el DTO no coincide exactamente
+                 this.listaReproduccionService.updateLista(this.lista.id!, listaActualizadaDto as any).subscribe({
                      next: (listaActualizada) => {
                          console.log('Canción añadida a la lista con éxito');
-                         this.lista = listaActualizada; // Actualizar la lista en el frontend
-                         this.cancionSeleccionadaId = null; // Resetear el select
+                         this.lista = listaActualizada;
+                         this.cancionSeleccionadaId = null;
+                         this.actualizarCancionesParaDropdown(); // Refrescar dropdown
                      },
                      error: (err) => console.error('Error al añadir canción a la lista:', err)
                  });
 
             } else if (cancionAAgregar && this.lista.canciones.some(c => c.id === cancionAAgregar.id)) {
                  console.warn('La canción ya está en la lista.');
-                 // Mostrar un mensaje al usuario (ej. con MatSnackBar)
             } else {
                  console.error('Canción seleccionada no encontrada.');
             }
 
         } else {
             console.warn('Selecciona una canción para añadir.');
-            // Mostrar un mensaje al usuario
         }
     }
 
     quitarCancionDeLista(cancionId: number): void {
         if (this.lista) {
-            // Enviar la lista actualizada al backend sin la canción a quitar
-            // Esto requiere un método específico en ListaReproduccionService o adaptar updateLista.
-
             const cancionIdsActualizados = new Set(this.lista.canciones.map(c => c.id));
             cancionIdsActualizados.delete(cancionId);
 
@@ -122,16 +126,21 @@ export class DetalleListaComponent implements OnInit {
                 id: this.lista.id,
                 nombre: this.lista.nombre,
                 descripcion: this.lista.descripcion,
-                cancionIds: Array.from(cancionIdsActualizados) // Convertir Set a Array para el DTO
+                cancionIds: Array.from(cancionIdsActualizados)
             };
 
-            this.listaReproduccionService.updateLista(this.lista.id!, listaActualizadaDto as any).subscribe({ // Usar as any temporalmente si el DTO no coincide exactamente
+            this.listaReproduccionService.updateLista(this.lista.id!, listaActualizadaDto as any).subscribe({
                 next: (listaActualizada) => {
                     console.log('Canción quitada de la lista con éxito');
-                    this.lista = listaActualizada; // Actualizar la lista en el frontend
+                    this.lista = listaActualizada;
+                    this.actualizarCancionesParaDropdown(); // Refrescar dropdown
                 },
                 error: (err) => console.error('Error al quitar canción de la lista:', err)
             });
         }
+    }
+
+    volverAListas(): void {
+        this.router.navigate(['/listas']);
     }
 }

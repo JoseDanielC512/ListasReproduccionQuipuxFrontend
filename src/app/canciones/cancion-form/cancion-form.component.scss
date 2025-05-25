@@ -1,0 +1,39 @@
+.form-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* Alinear al inicio verticalmente, no al centro completo */
+    padding: 20px;
+    min-height: calc(100vh - 64px); /* Ajustar a la altura de la vista */
+    box-sizing: border-box;
+}
+
+.song-form-card {
+    max-width: 600px; /* Ancho máximo para el formulario */
+    width: 100%;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+mat-card-title {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #3f51b5; /* Color primario del tema Indigo */
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px; /* Espacio entre los campos */
+}
+
+mat-form-field {
+    width: 100%; /* Campos de entrada al 100% de ancho */
+}
+
+.form-actions {
+    display: flex;
+    justify-content: center; /* Centrar los botones */
+    gap: 10px; /* Espacio entre los botones */
+    margin-top: 20px; /* Espacio superior para los botones */
+}

@@ -1,25 +1,33 @@
-<div>
-    <h2>Listas de Reproducción</h2>
-
-    <button mat-raised-button color="primary" routerLink="/listas/nueva">
-        <mat-icon>add</mat-icon> Crear Nueva Lista
-    </button>
+<div class="listas-page-container">
+    <mat-card class="page-header-card">
+        <mat-card-title>Listas de Reproducción</mat-card-title>
+        <mat-card-actions class="header-actions">
+            <button mat-raised-button color="primary" routerLink="/listas/nueva">
+                <mat-icon>add</mat-icon> Crear Nueva Lista
+            </button>
+        </mat-card-actions>
+    </mat-card>
 
     <div class="listas-container">
-        <mat-card *ngFor="let lista of listas" class="lista-card">
-            <mat-card-title>{{ lista.nombre }}</mat-card-title>
+        <mat-card *ngFor="let lista of listas" class="lista-card mat-elevation-z2">
+            <mat-card-header>
+                <mat-card-title>{{ lista.nombre }}</mat-card-title>
+                <mat-card-subtitle>{{ lista.descripcion || 'Sin descripción' }}</mat-card-subtitle>
+            </mat-card-header>
             <mat-card-content>
-                <p>{{ lista.descripcion || 'Sin descripción' }}</p>
                 <p>Canciones: {{ lista.canciones.length }}</p>
             </mat-card-content>
-            <mat-card-actions>
+            <mat-card-actions class="card-actions-bottom">
                 <button mat-button color="accent" [routerLink]="['/listas/detalle', lista.id]">
                     <mat-icon>visibility</mat-icon> Ver/Gestionar
                 </button>
                 <button mat-button color="warn" (click)="eliminarLista(lista.id!)">
-                    <mat-icon>delete</mat-icon>
+                    <mat-icon>delete</mat-icon> Eliminar
                 </button>
             </mat-card-actions>
         </mat-card>
+        <div *ngIf="listas.length === 0" class="no-listas-message">
+            <p>No hay listas de reproducción para mostrar. ¡Crea una nueva!</p>
+        </div>
     </div>
 </div>

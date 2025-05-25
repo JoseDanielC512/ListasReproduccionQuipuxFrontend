@@ -78,4 +78,8 @@ export class CancionFormComponent implements OnInit {
             }
         }
     }
+
+    onCancel(): void {
+        this.router.navigate(['/canciones']); // Navegar de vuelta a la lista de canciones
+    }
 }

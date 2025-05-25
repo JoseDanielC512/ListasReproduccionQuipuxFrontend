@@ -77,4 +77,8 @@ export class ListaFormComponent implements OnInit {
             }
         }
     }
+
+    onCancel(): void {
+        this.router.navigate(['/listas']); // Navegar de vuelta a la lista de listas
+    }
 }

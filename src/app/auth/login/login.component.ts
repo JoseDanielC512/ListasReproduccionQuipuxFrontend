@@ -4,14 +4,15 @@ import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms'; // Importar FormsModule
 import { MatInputModule } from '@angular/material/input'; // Importar MatInputModule
 import { MatButtonModule } from '@angular/material/button'; // Importar MatButtonModule
+import { MatCardModule } from '@angular/material/card'; // Importar MatCardModule
 import { CommonModule } from '@angular/common'; // Importar CommonModule
 
 @Component({
     selector: 'app-login',
     templateUrl: './login.component.html',
-    styleUrls: ['./login.component.scss'], // Usar scss ya que el proyecto usa scss
+    styleUrls: ['./login.component.scss'], // Usar scss
     standalone: true, // Marcar como standalone
-    imports: [FormsModule, MatInputModule, MatButtonModule, CommonModule] // Importar módulos necesarios
+    imports: [FormsModule, MatInputModule, MatButtonModule, MatCardModule, CommonModule] // Importar módulos necesarios
 })
 export class LoginComponent {
     username: string = '';

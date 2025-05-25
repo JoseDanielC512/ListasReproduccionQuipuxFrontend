@@ -1,0 +1,129 @@
+.detalle-lista-container {
+    padding: 20px;
+}
+
+.top-section {
+    display: flex;
+    gap: 20px; /* Espacio entre las dos tarjetas superiores */
+    margin-bottom: 20px; /* Espacio entre la sección superior y la tabla */
+    flex-wrap: wrap; /* Permite que las tarjetas se envuelvan en pantallas pequeñas */
+    align-items: stretch; /* Hace que las tarjetas se estiren para igualar la altura */
+}
+
+.lista-detalle-card,
+.anadir-cancion-card,
+.canciones-en-lista-card { /* Aplicar estilos base a todas las tarjetas */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    margin-bottom: 20px; /* Espacio entre tarjetas */
+}
+
+.lista-detalle-card,
+.anadir-cancion-card {
+    flex: 1; /* Ocupar el espacio disponible equitativamente */
+    min-width: 300px; /* Ancho mínimo para que no se compriman demasiado */
+    display: flex; /* Para controlar el layout interno y la altura */
+    flex-direction: column; /* Contenido en columna */
+}
+
+.lista-detalle-card mat-card-header {
+    padding: 16px 20px 0; /* Padding superior e inferior 0 para que el content maneje el espacio */
+}
+
+.lista-detalle-card mat-card-content {
+    padding: 16px 20px; /* Padding uniforme */
+    flex-grow: 1; /* Permite que el contenido crezca */
+}
+
+.anadir-cancion-card mat-card-title {
+    padding: 16px 20px 0; /* Padding para el título de la tarjeta de añadir canción */
+    margin-bottom: 10px; /* Espacio entre título y contenido */
+}
+
+.anadir-cancion-card .add-song-form-content {
+    padding: 0 20px 16px; /* Padding para el contenido del formulario de añadir canción */
+    flex-grow: 1; /* Permite que el contenido crezca */
+}
+
+.canciones-en-lista-card {
+    padding: 20px; /* Padding consistente para la tarjeta de la tabla */
+}
+
+mat-card-title {
+    color: #3f51b5; /* Color primario del tema Indigo */
+    // margin-bottom: 10px; // Se maneja en los selectores específicos
+}
+
+mat-card-subtitle {
+    color: rgba(0, 0, 0, 0.54);
+}
+
+/* Estilos para la tabla de canciones */
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th.mat-header-cell {
+    background-color: #e8eaf6; /* Un azul claro sutil del tema Indigo */
+    color: #3f51b5; /* Color primario del tema Indigo */
+    font-weight: bold;
+    padding: 12px 16px;
+    text-align: left;
+}
+
+td.mat-cell {
+    padding: 12px 16px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+}
+
+tr.mat-row:hover {
+    background-color: #f5f5f5;
+    cursor: pointer;
+}
+
+tr.mat-row:nth-child(odd) {
+    background-color: #ffffff;
+}
+
+tr.mat-row:nth-child(even) {
+    background-color: #fafafa;
+}
+
+tr.mat-row:last-child td.mat-cell {
+    border-bottom: none;
+}
+
+.no-songs-message {
+    text-align: center;
+    padding: 20px;
+    color: rgba(0, 0, 0, 0.54);
+    font-style: italic;
+}
+
+/* Estilos para la sección de añadir canción */
+.add-song-form-content { /* Renombrado de .add-song-content */
+    display: flex;
+    flex-direction: column; /* Ahora en columna */
+    align-items: center; /* Centrar el dropdown */
+    gap: 15px; /* Espacio entre el select y el botón (aunque el botón se moverá a .form-actions) */
+    padding-bottom: 15px; /* Espacio antes de las acciones */
+}
+
+.full-width-field {
+    width: 100%; /* Ocupar el 100% del ancho disponible en el contenedor */
+    max-width: 400px; /* Ancho máximo para el dropdown centrado */
+}
+
+.form-actions { /* Estilos para los botones dentro de las tarjetas */
+    display: flex;
+    justify-content: center; /* Centrar los botones */
+    gap: 10px;
+    margin-top: auto; /* Empujar las acciones al final de la tarjeta */
+}
+
+.bottom-actions {
+    display: flex;
+    justify-content: center; /* Centrar el botón */
+    margin-top: 20px; /* Espacio superior para el botón */
+}
